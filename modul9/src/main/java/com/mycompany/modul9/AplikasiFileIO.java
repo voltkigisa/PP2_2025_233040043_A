@@ -213,22 +213,22 @@ public class AplikasiFileIO extends JFrame{
     }
     
     private void appendFileTeks() {
-        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
+    if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+        File file = fileChooser.getSelectedFile();
 
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
-                writer.write(textArea.getText());
-                writer.newLine(); 
-                JOptionPane.showMessageDialog(this, "Text berhasil ditambahkan ke file!");
-                
-                //update last_notes
-                saveLastNotes(textArea.getText());
-                
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Gagal menambahkan text: " + ex.getMessage());
-            }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, true))) {
+            writer.write(textArea.getText());
+            writer.newLine(); 
+            JOptionPane.showMessageDialog(this, "Text berhasil ditambahkan ke file!");
+
+            // update last_notes.txt
+            simpanKeLastNotes();
+
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "Gagal menambahkan text: " + ex.getMessage());
         }
     }
+}
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(()-> {
