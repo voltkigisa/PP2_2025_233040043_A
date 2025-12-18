@@ -83,23 +83,47 @@ public class MahasiswaController {
         }
     }
 
-    private void simpan() {
-        try {
-            if (model.nimSudahAda(view.txtNIM.getText())) {
-                JOptionPane.showMessageDialog(view, "NIM sudah ada!");
-                return;
-            }
-            model.insert(
-                view.txtNama.getText(),
-                view.txtNIM.getText(),
-                view.txtJurusan.getText()
-            );
-            loadData();
-            clear();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(view, e.getMessage());
+    private boolean validasiInput() {
+        if (view.txtNama.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(view, "Nama tidak boleh kosong!");
+            view.txtNama.requestFocus();
+            return false;
         }
+
+        if (view.txtNIM.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(view, "NIM tidak boleh kosong!");
+            view.txtNIM.requestFocus();
+            return false;
+        }
+
+        if (view.txtJurusan.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(view, "Jurusan tidak boleh kosong!");
+            view.txtJurusan.requestFocus();
+            return false;
+        }
+
+        return true;
     }
+
+    private void simpan() {
+    if (!validasiInput()) return;
+
+    try {
+        if (model.nimSudahAda(view.txtNIM.getText())) {
+            JOptionPane.showMessageDialog(view, "NIM sudah ada!");
+            return;
+        }
+        model.insert(
+            view.txtNama.getText(),
+            view.txtNIM.getText(),
+            view.txtJurusan.getText()
+        );
+        loadData();
+        clear();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(view, e.getMessage());
+    }
+}
     
     private void hapus() {
         try {
